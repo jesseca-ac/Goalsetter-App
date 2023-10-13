@@ -41,7 +41,7 @@ const updateGoal = asyncHandler(
 
     if(!goal) {
       res.status(400)
-      throw new Error(`Goal ID ${req.params.id} Not Found`)
+      throw new Error(`Goal ID ${req.params.id} not found, failed to update`)
     }
 
     const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
@@ -57,7 +57,20 @@ const updateGoal = asyncHandler(
 // @access  Private
 const deleteGoal = asyncHandler(
   async (req, res) => {
-    res.status(200).json({ message: `Goal ID ${req.params.id} Deleted` })
+    const goal = await Goal.findById(req.params.id)
+
+    if(!goal) {
+      res.status(400)
+      throw new Error(`Goal ID ${req.params.id} not found, failed to delete`)
+    }
+
+    // const deletedGoal = await Goal.deleteOne({ _id: req.params.id})
+    // reference https://masteringjs.io/tutorials/mongoose/delete-by-id
+
+    await goal.deleteOne()
+    // this is shorter version of deletedGoal above
+
+    res.status(200).json({id: req.params.id, message: `Goal ID ${req.params.id} Deleted` })
   }
 )
 

@@ -1,4 +1,4 @@
-// @desc    Get goals
+
 // @route   GET /api/goals
 // @access  Private
 const getGoals = (req, res) => {
@@ -6,17 +6,17 @@ const getGoals = (req, res) => {
 }
 
 
-// @desc    Create goal
 // @route   POST /api/goals
 // @access  Private
 const createGoal = (req, res) => {
-  console.log(req.text)
+  if(!req.body.text) {
+    res.status(400).json({ message: 'body.text is missing' })
+  }
 
   res.status(200).json({ message: 'Goal Created' })
 }
 
 
-// @desc    Update goal
 // @route   PUT /api/goals
 // @access  Private
 const updateGoal = (req, res) => {
@@ -24,12 +24,13 @@ const updateGoal = (req, res) => {
 }
 
 
-// @desc    Delete goals
 // @route   DELETE /api/goals
 // @access  Private
 const deleteGoal = (req, res) => {
   res.status(200).json({ message: `Goal ID ${req.params.id} Deleted` })
 }
+
+
 
 module.exports = {
   getGoals,

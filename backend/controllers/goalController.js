@@ -10,7 +10,8 @@ const getGoals = (req, res) => {
 // @access  Private
 const createGoal = (req, res) => {
   if(!req.body.text) {
-    res.status(400).json({ message: 'body.text is missing' })
+    res.status(400)
+    throw new Error('body.text is missing')
   }
 
   res.status(200).json({ message: 'Goal Created' })
